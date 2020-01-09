@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import React , { Component} from 'react';
 import './App.css';
+import GameBoard from './components/GameBoard/GameBoard'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      guesses : [null , null],
+      hiddenChars : this.newMatchKey(),   
+      // hidden chars = [{pairValue : Number, display : Boolean,  }...]
+      howManyPairs : 8 ,
+    }
+  }
+  handleClick(e){
+    console.log(e)
+  }
+
+  newMatchKey(){
+    let pairs = []
+    for(let i = 1; i <= 8; i++){
+      pairs.push(i)
+      pairs.push(i)
+    }
+    pairs.sort( () => Math.random() - Math.random())
+    pairs = pairs.map(num => {
+      return {pairValue:num , display: false} 
+    })
+    return pairs
+  }
+  
+  render(){
+    return (
+      <div>
+        <h1>Greetings</h1>
+  
+        <GameBoard 
+          hiddenChars = {this.state.hiddenChars}
+          handleClick = {this.handleClick}
+        />
+      </div>
+    )
+  }
 }
+
+
 
 export default App;
